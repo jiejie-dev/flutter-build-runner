@@ -1,0 +1,36 @@
+name: Build and Push Flutter Docker Image
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Extract tag name
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Login to Coding Docker Registry
+        uses: docker/login-action@v2
+        with:
+          registry: code2code-docker.pkg.coding.net
+          username: ${{ secrets.CODINGHUB_USERNAME }}
+          password: ${{ secrets.CODINGHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: code2code-docker.pkg.coding.net/puupees/k8s/flutter-build-runner:${{ env.TAG_NAME }}
+          build-args: |
+            FLUTTER_VERSION=${{ env.TAG_NAME }} 
