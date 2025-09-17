@@ -22,15 +22,15 @@ jobs:
       - name: Login to Coding Docker Registry
         uses: docker/login-action@v3
         with:
-          registry: code2code-docker.pkg.coding.net
-          username: ${{ secrets.CODINGHUB_USERNAME }}
-          password: ${{ secrets.CODINGHUB_TOKEN }}
+          registry: docker.cnb.cool
+          username: cnb
+          password: 5fY9KN108ahq3zmLvncqf2Kt7IE
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: code2code-docker.pkg.coding.net/puupees/k8s/flutter-build-runner:${{ env.TAG_NAME }}
+          tags: docker.cnb.cool/puupee/flutter-build-runner:${{ env.TAG_NAME }}
           build-args: |
             FLUTTER_VERSION=${{ env.TAG_NAME }} 
