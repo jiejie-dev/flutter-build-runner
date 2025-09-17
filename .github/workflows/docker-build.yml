@@ -24,7 +24,7 @@ jobs:
         with:
           registry: docker.cnb.cool
           username: cnb
-          password: 5fY9KN108ahq3zmLvncqf2Kt7IE
+          password: 5Y1PAD1d9aWsC4r2dzNzatSAe0G
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
